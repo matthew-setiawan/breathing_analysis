@@ -1,4 +1,5 @@
-// Try it nowAsk again laterDon't show again
+#include <HTTPClient.h>
+
 // ESP32 Frequency Meter
 // Code by Kristel Fobelets and Kris Thielemans 11/2/2023
 // Adapted from:
@@ -15,6 +16,16 @@
 #include "FS.h"
 #include "SD.h"
 #include "SPI.h"
+#include "WiFi.h"
+
+// WiFi
+
+const char* ssid = "matthew";
+const char* password = "123456789";
+
+//Server
+String serverip = "http://192.168.137.168:8000";
+HTTPClient http;
 
 SPIClass spi = SPIClass(2);
 File output;
@@ -99,7 +110,17 @@ void renameFile(fs::FS &fs, const char * path1, const char * path2){
 //----------------------------------------------------------------------------------------
 void setup()
 {
-  Serial.begin(115200);                                                   // Serial Console Arduino 115200 Bps
+  Serial.begin(9600);                                                   // Serial Console Arduino 115200 Bps
+
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.println("Connecting to WiFi...");
+  }
+  Serial.println("Connected to WiFi");
+  
 #if 1
    spi.begin();                                                            // setting up SPI pins for ESP32S2 - for SD card interactions
   
@@ -193,6 +214,12 @@ void start_counters()
   pcnt_counter_resume(PCNT_COUNT_UNIT_1); 
 }
 
+String floatToString(float value) {
+  char buf[10];
+  dtostrf(value, 5, 2, buf);
+  return String(buf);
+}
+
 void write_data()
 {
       // Note: esp_time is the time at the end of the read_PCNT
@@ -202,11 +229,12 @@ void write_data()
       Serial.print(" ");
       Serial.print(frequency_0);
       Serial.print(" ");
-      //Serial.print(multPulses_0);
-      //Serial.print(" ");
-      //Serial.print(multPulses_1);
-      //Serial.print(" ");
       Serial.println(frequency_1);
+      String url = serverip+"/datapost/MS3120001_"+floatToString(frequency_0)+"_"+floatToString(frequency_1);
+      http.begin(url);//send <hr>-<co2>-<accmag>
+      int httpResponseCode = http.GET();
+      String response = http.getString();
+      http.end();
 #endif
       output = SD.open(SD_filename,FILE_APPEND);
       output.print(esp_time_interval);
