@@ -4,7 +4,7 @@ A compilation of materials utilized in Final Year Project, "A Smart Breathing Ma
 
 There are three core software used in this project: web application, software for knitted coil and software for mask.
 
-#Step 1: Running web application
+<h2>Step 1: Running web application</h2>h2>
 - Install Django and Python3.9
 - Run python3.9 manage.py runserver 0.0.0.0:8000 to run it on your local internet connection
 
