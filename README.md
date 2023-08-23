@@ -1,4 +1,6 @@
-A compilation of materials utilized in Final Year Project, "A Smart Breathing Mask for Breathing Training"
+## A Smart Breathing Mask for Breathing Training
+
+A compilation of materials utilized in Final Year Project, "A Smart Breathing Mask for Breathing Training". The software for this project contained 3 main functional components: server, mask and knitted coil. The server contains functionality which stores device data and user data. The mask contains the ability to read CO2, temperature, heart rate and movements. The Knitted coil reads the resonant frequency of an inductor coil knitted around the users abdomen to track changes in breathing patterns.
 
 #How to use?
 
