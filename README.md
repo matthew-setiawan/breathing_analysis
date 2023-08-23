@@ -22,7 +22,6 @@ Visit Hardware/Mask/src/main.cpp
 <b>Edit the information to your WiFi username and password, and the IP of your computer/server</b>
 ````shell
 // WiFi
-
 const char* ssid = "matthew";
 const char* password = "123456789";
 
@@ -39,7 +38,6 @@ Visit Hardware/Knitted\Coil/src/main.cpp
 <b>Edit the information to your WiFi username and password, and the IP of your computer/server</b>
 ````shell
 // WiFi
-
 const char* ssid = "matthew";
 const char* password = "123456789";
 
